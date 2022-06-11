@@ -42,13 +42,13 @@ app.get('/insert', (req, res) => {
         else {
             parsedData = result
             JSON.parse(parsedData)
-
-            //parsedData = eval(parsedData)
-
+            console.log(parsedData)
             console.log("python script finished")
+            parsedData = parsedData[0]
+            res.send(parsedData)
         }
     })
-    res.send("hey")
+
 })
 
 app.get('/delete', (req, res) => {
