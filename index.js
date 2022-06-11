@@ -13,8 +13,8 @@ const {parse} = require("path");
 // app.use(cors());
 //app.use('/api', router)
 
-app.get('/select/:state/:metro/:day/:month/:year', (req, res) => {
-    States.findAll({
+app.get('/select/:state/:metro/:day/:month/:year/:type', (req, res) => {
+    States.findOne({
         where: {
             stateName: req.params.state,
             metro: req.params.metro,
@@ -22,8 +22,9 @@ app.get('/select/:state/:metro/:day/:month/:year', (req, res) => {
             month:req.params.month,
             year:req.params.year
         }
-    }).then((users)=>{
-        res.send(users)
+        // , attributes: [req.params.type],
+    }).then((price)=>{
+        res.send(price)
     }).catch((err)=>{
       console.log(err)
     })
