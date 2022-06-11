@@ -40,12 +40,10 @@ app.get('/insert', (req, res) => {
             console.log(err)
         }
         else {
-            parsedData = result
-            JSON.parse(parsedData)
-            console.log(parsedData)
+            parsedData = JSON.parse(result)
             console.log("python script finished")
-            parsedData = parsedData[0]
-            res.send(parsedData)
+            //parsedData = parsedData[0]
+            console.log(parsedData)
         }
     })
 
