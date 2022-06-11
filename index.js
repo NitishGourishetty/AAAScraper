@@ -13,8 +13,16 @@ const {parse} = require("path");
 // app.use(cors());
 //app.use('/api', router)
 
-app.get('/select', (req, res) => {
-    States.findAll().then((users)=>{
+app.get('/select/:state/:metro/:day/:month/:year', (req, res) => {
+    States.findAll({
+        where: {
+            stateName: req.params.state,
+            metro: req.params.metro,
+            day:req.params.day,
+            month:req.params.month,
+            year:req.params.year
+        }
+    }).then((users)=>{
         res.send(users)
     }).catch((err)=>{
       console.log(err)
