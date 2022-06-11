@@ -9,7 +9,7 @@ stateCodes = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", 
 
 testing = ["AL", "AK"]
 
-for state in testing:
+for state in stateCodes:
     URL = "https://gasprices.aaa.com/?state=" + state
     r = requests.get(URL, headers={'User-Agent': 'Mozilla/5.0'})
     counties = {}

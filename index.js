@@ -26,14 +26,7 @@ app.get('/select', (req, res) => {
 
 
 app.get('/insert', (req, res) => {
-    // States.create({
-    //         stateName: "California",
-    //         diesel: 4.29
-    //     }).catch(err => {
-    //         if (err) {
-    //             console.log(err)
-    //         }
-    // })
+
     let parsedData = "none"
     PythonShell.run('parser.py', null, function(err, result) {
         if(err) {
@@ -44,7 +37,11 @@ app.get('/insert', (req, res) => {
             console.log("python script finished")
             //parsedData = parsedData[0]
             //console.log(parsedData)
-
+            let today = new Date();
+            let year = today.getFullYear();
+            let month = today.getMonth() + 1;
+            let day = today.getDate();
+            //let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
             Object.keys(parsedData).forEach(function(key) {
                 let individual = parsedData[key];
                 //console.log(key, parsedData[key]);
@@ -55,10 +52,26 @@ app.get('/insert', (req, res) => {
                     let premium = parseFloat(individual[key2][2].replace(/\$|,/g, ''));
                     let diesel = parseFloat(individual[key2][3].replace(/\$|,/g, ''));
                     console.log(key2 + ":", regular, midgrade, premium, diesel);
+                    States.create({
+                            stateName: key,
+                            metro: key2,
+                            day: day,
+                            month: month,
+                            year: year,
+                            regular: regular,
+                            midgrade: midgrade,
+                            premium: premium,
+                            diesel: diesel
+                        }).catch(err => {
+                            if (err) {
+                                console.log(err)
+                            }
+                    })
                 });
             });
 
-            res.send("Hi")
+
+            res.send('task completed')
         }
     })
 
