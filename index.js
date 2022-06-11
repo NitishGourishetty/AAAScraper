@@ -43,7 +43,17 @@ app.get('/insert', (req, res) => {
             parsedData = JSON.parse(result)
             console.log("python script finished")
             //parsedData = parsedData[0]
-            console.log(parsedData)
+            //console.log(parsedData)
+
+            Object.keys(parsedData).forEach(function(key) {
+                let individual = parsedData[key];
+                //console.log(key, parsedData[key]);
+                Object.keys(individual).forEach(function(key2) {
+                   console.log(key2, individual[key2])
+                });
+            });
+
+            res.send("Hi")
         }
     })
 
