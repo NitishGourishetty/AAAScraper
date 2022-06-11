@@ -49,7 +49,12 @@ app.get('/insert', (req, res) => {
                 let individual = parsedData[key];
                 //console.log(key, parsedData[key]);
                 Object.keys(individual).forEach(function(key2) {
-                   console.log(key2, individual[key2])
+                    //key1 is state
+                    let regular = parseFloat(individual[key2][0].replace(/\$|,/g, ''));
+                    let midgrade = parseFloat(individual[key2][1].replace(/\$|,/g, ''));
+                    let premium = parseFloat(individual[key2][2].replace(/\$|,/g, ''));
+                    let diesel = parseFloat(individual[key2][3].replace(/\$|,/g, ''));
+                    console.log(key2 + ":", regular, midgrade, premium, diesel);
                 });
             });
 
