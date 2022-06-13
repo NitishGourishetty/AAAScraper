@@ -5,7 +5,14 @@
     "database": "GasPrices",
     "host": "otozen.cniuoodi434o.us-west-1.rds.amazonaws.com",
     "dialect": "mysql",
-    "port": "3306"
+    "port": "3306",
+    "pool": {
+      "max": 15,
+      "min": 5,
+      "idle": 20000,
+      "evict": 15000,
+      "acquire": 30000
+    }
   },
   "test": {
     "username": "admin",
@@ -13,7 +20,14 @@
     "database": "GasPrices",
     "host": "otozen.cniuoodi434o.us-west-1.rds.amazonaws.com",
     "dialect": "mysql",
-    "port": "3306"
+    "port": "3306",
+    "pool": {
+      "max": 15,
+      "min": 5,
+      "idle": 20000,
+      "evict": 15000,
+      "acquire": 30000
+    }
   },
   "production": {
     "username": "admin",
@@ -21,6 +35,13 @@
     "database": "GasPrices",
     "host": "otozen.cniuoodi434o.us-west-1.rds.amazonaws.com",
     "dialect": "mysql",
-    "port": "3306"
+    "port": "3306",
+    "pool": {
+      "max": 15,
+      "min": 5,
+      "idle": 20000,
+      "evict": 15000,
+      "acquire": 30000
+    }
   }
 }
