@@ -7,36 +7,17 @@ const bodyParser = require("body-parser");
 const cors = require('cors')
 const {PythonShell} = require('python-shell')
 const {parse} = require("path");
-
+const schedule = require('node-schedule');
+const nodeCron = require('node-cron');
+var CronJob = require('cron').CronJob;
 // app.use(bodyParser.urlencoded({extended: true}));
 // app.use(bodyParser.json);
 // app.use(cors());
 //app.use('/api', router)
 
-app.get('/select/:state/:metro/:day/:month/:year/:type', (req, res) => {
-    States.findOne({
-        where: {
-            stateName: req.params.state,
-            metro: req.params.metro,
-            day:req.params.day,
-            month:req.params.month,
-            year:req.params.year
-        }
-        // , attributes: [req.params.type],
-    }).then((price)=>{
-        res.send(price)
-    }).catch((err)=>{
-      console.log(err)
-    })
-})
-
-
-//do a /insert to make new columns just like this!!!
-
-
-app.get('/insert', (req, res) => {
-
-    let parsedData = "none"
+schedule.scheduleJob('0 0 * * *', () => {
+    console.log("scheduled job begun");
+    let parsedData = "none";
     PythonShell.run('parser.py', null, function(err, result) {
         if(err) {
             console.log(err)
@@ -62,28 +43,51 @@ app.get('/insert', (req, res) => {
                     let diesel = parseFloat(individual[key2][3].replace(/\$|,/g, ''));
                     console.log(key2 + ":", regular, midgrade, premium, diesel);
                     States.create({
-                            stateName: key,
-                            metro: key2,
-                            day: day,
-                            month: month,
-                            year: year,
-                            regular: regular,
-                            midgrade: midgrade,
-                            premium: premium,
-                            diesel: diesel
-                        }).catch(err => {
-                            if (err) {
-                                console.log(err)
-                            }
+                        stateName: key,
+                        metro: key2,
+                        day: day,
+                        month: month,
+                        year: year,
+                        regular: regular,
+                        midgrade: midgrade,
+                        premium: premium,
+                        diesel: diesel
+                    }).catch(err => {
+                        if (err) {
+                            console.log(err)
+                        }
                     })
                 });
             });
-
-
-            res.send('task completed')
+            console.log('parsing complete')
         }
     })
+    console.log("hey");
+})
 
+app.get('/select/:state/:metro/:day/:month/:year/:type', (req, res) => {
+    States.findOne({
+        where: {
+            stateName: req.params.state,
+            metro: req.params.metro,
+            day:req.params.day,
+            month:req.params.month,
+            year:req.params.year
+        }
+        // , attributes: [req.params.type],
+    }).then((price)=>{
+        res.send(price)
+    }).catch((err)=>{
+      console.log(err)
+    })
+})
+
+
+//do a /insert to make new columns just like this!!!
+
+
+app.get('/insert', (req, res) => {
+    res.send('hey');
 })
 
 app.get('/delete', (req, res) => {
