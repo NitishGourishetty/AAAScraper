@@ -8,8 +8,6 @@ const cors = require('cors')
 const {PythonShell} = require('python-shell')
 const {parse} = require("path");
 const schedule = require('node-schedule');
-const nodeCron = require('node-cron');
-var CronJob = require('cron').CronJob;
 // app.use(bodyParser.urlencoded({extended: true}));
 // app.use(bodyParser.json);
 // app.use(cors());
