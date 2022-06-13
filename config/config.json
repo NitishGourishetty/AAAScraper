@@ -12,6 +12,9 @@
       "idle": 20000,
       "evict": 15000,
       "acquire": 30000
+    },
+    "dialectOptions": {
+      "connectTimeout": 60000
     }
   },
   "test": {
@@ -27,6 +30,9 @@
       "idle": 20000,
       "evict": 15000,
       "acquire": 30000
+    },
+    "dialectOptions": {
+      "connectTimeout": 60000
     }
   },
   "production": {
@@ -42,6 +48,9 @@
       "idle": 20000,
       "evict": 15000,
       "acquire": 30000
+    },
+    "dialectOptions": {
+      "connectTimeout": 60000
     }
   }
 }
