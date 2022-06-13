@@ -1,10 +1,11 @@
 {
   "development": {
-    "username": "root",
-    "password": "Nittu11!",
+    "username": "admin",
+    "password": "password",
     "database": "GasPrices",
-    "host": "localhost",
-    "dialect": "mysql"
+    "host": "otozen.cniuoodi434o.us-west-1.rds.amazonaws.com",
+    "dialect": "mysql",
+    "port": "3306"
   },
   "test": {
     "username": "root",
