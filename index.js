@@ -63,7 +63,7 @@ schedule.scheduleJob('0 0 * * *', () => {
     console.log("hey");
 })
 
-app.get('/select/:state/:metro/:day/:month/:year/:type', (req, res) => {
+app.get('/getgasprice/:state/:metro/:day/:month/:year', (req, res) => {
     States.findOne({
         where: {
             stateName: req.params.state,
@@ -71,8 +71,9 @@ app.get('/select/:state/:metro/:day/:month/:year/:type', (req, res) => {
             day:req.params.day,
             month:req.params.month,
             year:req.params.year
-        }
-        // , attributes: [req.params.type],
+        },
+        attributes: ['stateName', 'metro', 'day', 'month', 'year', 'regular', 'midgrade',
+            'premium', 'diesel']  //if change, change unique key made on SQL database
     }).then((price)=>{
         res.send(price)
     }).catch((err)=>{
@@ -80,16 +81,89 @@ app.get('/select/:state/:metro/:day/:month/:year/:type', (req, res) => {
     })
 })
 
-
-//do a /insert to make new columns just like this!!!
-
-
-app.get('/insert', (req, res) => {
-    res.send('hey');
+app.get('/getgasprice/:state/:metro/:day/:month/', (req, res) => {
+    let today = new Date();
+    let year = today.getFullYear();
+    States.findOne({
+        where: {
+            stateName: req.params.state,
+            metro: req.params.metro,
+            day:req.params.day,
+            month:req.params.month,
+            year:year
+        },
+        attributes: ['stateName', 'metro', 'day', 'month', 'year', 'regular', 'midgrade',
+            'premium', 'diesel']  //if change, change unique key made on SQL database
+    }).then((price)=>{
+        res.send(price)
+    }).catch((err)=>{
+        console.log(err)
+    })
 })
 
-app.get('/delete', (req, res) => {
-    res.send('select')
+app.get('/getgasprice/:state/:metro/:day/', (req, res) => {
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    States.findOne({
+        where: {
+            stateName: req.params.state,
+            metro: req.params.metro,
+            day:req.params.day,
+            month:month,
+            year:year
+        },
+        attributes: ['stateName', 'metro', 'day', 'month', 'year', 'regular', 'midgrade',
+            'premium', 'diesel']  //if change, change unique key made on SQL database
+    }).then((price)=>{
+        res.send(price)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
+app.get('/getgasprice/:state/:metro', (req, res) => {
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+    States.findOne({
+        where: {
+            stateName: req.params.state,
+            metro: req.params.metro,
+            day:day,
+            month:month,
+            year:year
+        },
+        attributes: ['stateName', 'metro', 'day', 'month', 'year', 'regular', 'midgrade',
+            'premium', 'diesel']  //if change, change unique key made on SQL database
+    }).then((price)=>{
+        res.send(price)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
+app.get('/getgasprice/:state', (req, res) => {
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+    States.findOne({
+        where: {
+            stateName: req.params.state,
+            metro: req.params.state,
+            day:day,
+            month:month,
+            year:year
+        },
+        attributes: ['stateName', 'metro', 'day', 'month', 'year', 'regular', 'midgrade',
+            'premium', 'diesel']  //if change, change unique key made on SQL database
+    }).then((price)=>{
+        res.send(price)
+    }).catch((err)=>{
+        console.log(err)
+    })
 })
 
 //ORM SEQUELIZE
