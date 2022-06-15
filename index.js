@@ -3,15 +3,8 @@ const app = express();
 const router = express.Router();
 const db = require('./models')
 const { States } = require('./models')
-const bodyParser = require("body-parser");
-const cors = require('cors')
 const {PythonShell} = require('python-shell')
-const {parse} = require("path");
 const schedule = require('node-schedule');
-// app.use(bodyParser.urlencoded({extended: true}));
-// app.use(bodyParser.json);
-// app.use(cors());
-//app.use('/api', router)
 
 schedule.scheduleJob('0 0 * * *', () => {
     console.log("scheduled job begun");
