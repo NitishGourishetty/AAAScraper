@@ -2,9 +2,49 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const db = require('./models')
-const { States } = require('./models')
+const { county, States } = require('./models')
 const {PythonShell} = require('python-shell')
 const schedule = require('node-schedule');
+
+
+schedule.scheduleJob('5 0 * * *', () => {
+    console.log("county job started");
+    let parsedData = "none";
+    PythonShell.run('countygrabber.py', null, function (err, result) {
+        if (err) {
+            console.log(err)
+        } else {
+            parsedData = JSON.parse(result)
+            console.log("python script finished")
+            let today = new Date();
+            let year = today.getFullYear();
+            let month = today.getMonth() + 1;
+            let day = today.getDate();
+
+            Object.keys(parsedData).forEach(function (key) {
+                let stateCode = key;
+                let individual = parsedData[key];
+                Object.keys(individual).forEach(function (key2) {
+                    let countyName = key2;
+                    let gasPrice = parseFloat(individual[key2].replace(/\$|,/g, ''));
+                    //console.log(countyName, gasPrice)
+                    county.create({
+                        stateName: stateCode,
+                        countyName: countyName,
+                        day: day,
+                        month: month,
+                        year: year,
+                        gasPrice: gasPrice
+                    }).catch(err => {
+                        if (err) {
+                            console.log(err)
+                        }
+                    })
+                });
+            });
+        }
+    })
+})
 
 schedule.scheduleJob('0 0 * * *', () => {
     console.log("scheduled job begun");
