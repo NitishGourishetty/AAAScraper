@@ -46,6 +46,122 @@ schedule.scheduleJob('5 0 * * *', () => {
     })
 })
 
+app.get('/getcountyprice/:state/:countyName/:day/:month/:year', (req, res) => {
+    county.findOne({
+        where: {
+            stateName: req.params.state,
+            countyName: req.params.countyName,
+            day:req.params.day,
+            month:req.params.month,
+            year:req.params.year
+        },
+        attributes: ['stateName', 'countyName', 'day', 'month', 'year', 'gasPrice']  //if change, change unique key made on SQL database
+    }).then((price)=>{
+        res.send(price)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
+app.get('/getcountyprice/:state/:countyName/:day/:month/', (req, res) => {
+    let today = new Date();
+    let year = today.getFullYear();
+    county.findOne({
+        where: {
+            stateName: req.params.state,
+            countyName: req.params.countyName,
+            day:req.params.day,
+            month:req.params.month,
+            year:year
+        },
+        attributes: ['stateName', 'countyName', 'day', 'month', 'year', 'gasPrice']  //if change, change unique key made on SQL database
+    }).then((price)=>{
+        res.send(price)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
+app.get('/getcountyprice/:state/:countyName/:day/', (req, res) => {
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    county.findOne({
+        where: {
+            stateName: req.params.state,
+            countyName: req.params.countyName,
+            day:req.params.day,
+            month:month,
+            year:year
+        },
+        attributes: ['stateName', 'countyName', 'day', 'month', 'year', 'gasPrice']  //if change, change unique key made on SQL database
+    }).then((price)=>{
+        res.send(price)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
+app.get('/getcountyprice/:state/:countyName', (req, res) => {
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+    county.findOne({
+        where: {
+            stateName: req.params.state,
+            countyName: req.params.countyName,
+            day:day,
+            month:month,
+            year:year
+        },
+        attributes: ['stateName', 'countyName', 'day', 'month', 'year', 'gasPrice']  //if change, change unique key made on SQL database
+    }).then((price)=>{
+        res.send(price)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
+
+//temporary getMonth methods, change to add a year function
+app.get('/monthlycountyprice/:state/:countyName/:month/', (req, res) => {
+    let today = new Date();
+    let year = today.getFullYear();
+    county.findAll({
+        where: {
+            stateName: req.params.state,
+            countyName: req.params.countyName,
+            month:req.params.month,
+            year:year
+        },
+        attributes: ['stateName', 'countyName', 'day', 'month', 'year', 'gasPrice']  //if change, change unique key made on SQL database
+    }).then((price)=>{
+        res.send(price)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
+app.get('/monthlymetroprice/:state/:metro/:month/', (req, res) => {
+    let today = new Date();
+    let year = today.getFullYear();
+    States.findAll({
+        where: {
+            stateName: req.params.state,
+            metro: req.params.metro,
+            month:req.params.month,
+            year:year
+        },
+        attributes: ['stateName', 'metro', 'day', 'month', 'year', 'regular', 'midgrade',
+        'premium', 'diesel']  //if change, change unique key made on SQL database
+    }).then((price)=>{
+        res.send(price)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
 schedule.scheduleJob('0 0 * * *', () => {
     console.log("scheduled job begun");
     let parsedData = "none";
@@ -198,6 +314,13 @@ app.get('/getgasprice/:state', (req, res) => {
         console.log(err)
     })
 })
+
+
+
+
+
+
+
 
 //ORM SEQUELIZE
 db.sequelize.sync().then((req)=> {
